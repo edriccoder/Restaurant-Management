@@ -13,6 +13,14 @@
         </nav>
     </div>
 </div>
+<div class="container">
+    @if(Session::has('success'))
+        <p class="alert alert-success">{{ Session::get('success') }}</p>
+    @endif
+    @if(Session::has('error'))
+        <p class="alert alert-danger">{{ Session::get('error') }}</p>
+    @endif
+</div>
 
 <div class="container-xxl py-5">
     <div class="container">
@@ -25,7 +33,7 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <h1 class="mb-4">{{$foodItem->title}}</h1>
+                <h1 class="mb-4">{{$foodItem->name}}</h1>
                 <p class="mb-4">{{$foodItem->description}}</p>
                 <div class="row g-4 mb-4">
                     <div class="col-sm-6">
@@ -35,7 +43,19 @@
                     </div>
                    
                 </div>
-                <a class="btn btn-primary py-3 px-5 mt-2" href="">Add to Cart</a>
+                <form method="POST" action="{{ route('food.cart', $foodItem->id) }}">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                    <input type="hidden" name="food_id" value="{{ $foodItem->id }}">
+                    <input type="hidden" name="name" value="{{ $foodItem->name }}">
+                    <input type="hidden" name="image" value="{{ $foodItem->image }}">
+                    <input type="hidden" name="price" value="{{ $foodItem->price }}">
+                    @if($cartVerify > 0)
+                        <button type="submit" name="submit" class="btn btn-primary py-3 px-5 mt-2" disabled>Add to Cart</button>
+                    @else
+                        <button type="submit" name="submit" class="btn btn-primary py-3 px-5 mt-2">Add to Cart</button>
+                    @endif
+                </form>
             </div>
         </div>
     </div>
