@@ -7,12 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\Food\Food;
 class FoodsController extends Controller
 {
-    // public function index() {
+    public function foodDetails($id) {
 
-    //     $breakfastFoods = Food::select()->take(4)
-    //     ->where('category', 'Break Fast')->get();
-
-    //     return view('home', compact('breakfastFoods'));
+        $foodItem = Food::find($id);
         
-    // }
+        return view('foods.food-details', compact('foodItem'));
+
+    }
 }
