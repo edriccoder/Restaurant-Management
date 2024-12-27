@@ -44,4 +44,36 @@ class FoodsController extends Controller
         // return view('foods.food-details', compact('foodItem'));
 
     }
+
+    public function displayCartItems() {
+
+        if (Auth::check()) {
+            // display cart items
+            $cartItems = Cart::where('user_id', Auth::user()->id)->get();
+        
+            // display price
+            $price = Cart::where('user_id', Auth::user()->id)->sum('price');
+        
+            return view('foods.cart', compact('cartItems', 'price'));
+        } else {
+            abort(403, 'Unauthorized action.');
+        }
+    }
+
+    public function deleteCartItems($id) {
+
+        // display cart items
+        $deleteItem = Cart::where('user_id', Auth::user()->id)
+        ->where('food_id', $id);
+
+        $deleteItem->delete();
+
+        if($deleteItem) {
+            return redirect()->route('food.display.cart')->with(['delete' => 'Item deleted from cart successfully']);
+        } else {
+            return redirect()->route('food.display.cart')->with(['error' => 'Item not deleted to cart']);
+        }
+
+    }
+    
 }
