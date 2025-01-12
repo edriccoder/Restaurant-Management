@@ -52,14 +52,15 @@
           <div class="position-relative mx-auto" style="max-width: 400px; padding-left: 679px;">
             <p style="margin-left: -7px;" class="w-19 py-3 ps-4 pe-5" type="text"> Total: {{$price}}</p>
             @if($price == 0)
-                <div class="alert alert-warning d-flex align-items-center" role="alert">
-                    <i class="fa fa-exclamation-circle me-2"></i>
-                    <div>
-                        You cannot check out when you have no items in cart
-                    </div>
+                <div>
+                    You cannot check out when you have no items in cart
                 </div>
             @else
-                <button type="button" class="btn btn-primary py-2 top-0 end-0 mt-2 me-2">Checkout</button>
+                <form action="{{route('prepare.checkout')}}" method="POST">
+                    @csrf
+                    <input type="text" value="{{$price}}" name="price" hidden>
+                    <button type="submit" class="btn btn-primary py-2 top-0 end-0 mt-2 me-2">Checkout</button>
+                </form>
             @endif
         </div>
     </div>

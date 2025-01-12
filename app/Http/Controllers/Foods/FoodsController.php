@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Food\Food;
 use App\Models\Food\Cart;
+use App\Models\Food\checkout;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class FoodsController extends Controller
 {
@@ -23,26 +25,28 @@ class FoodsController extends Controller
 
     }
 
-    public function cart(Request $request, $id) {
+    public function cart(Request $request, $id)
+    {
+        $cartVerify = Cart::where('food_id', $id)
+            ->where('user_id', Auth::user()->id)->count();
+
+        if ($cartVerify > 0) {
+            return redirect()->route('food.details', $id)->with(['error' => 'Item already in cart']);
+        }
 
         $cart = Cart::create([
             "user_id" => $request->user_id,
-            "food_id" => $request->food_id, 
-            "name" => $request->name, 
-            "image" => $request->image, 
-            "price" => $request->price, 
+            "food_id" => $request->food_id,
+            "name" => $request->name,
+            "image" => $request->image,
+            "price" => $request->price,
         ]);
 
-        echo "Item Added to cart successfully";
-
-        if($cart) {
+        if ($cart) {
             return redirect()->route('food.details', $id)->with(['success' => 'Item Added to cart successfully']);
         } else {
             return redirect()->route('food.details', $id)->with(['error' => 'Item not added to cart']);
         }
-        
-        // return view('foods.food-details', compact('foodItem'));
-
     }
 
     public function displayCartItems() {
@@ -75,5 +79,43 @@ class FoodsController extends Controller
         }
 
     }
-    
+
+    public function prepareCheckout(Request $request) {
+
+
+        $value = $request->price;
+        Session::put('price', $value);
+
+        $newPrice = Session::get('price');
+
+        if($newPrice > 0) {
+            return redirect()->route('foods.checkout', compact('newPrice'));
+
+        }
+
+    }
+
+    public function checkout(){
+        return view('foods.checkout');
+    }
+
+    public function storeCheckout(Request $request) {
+
+        $checkout = checkout::create([
+            "name" => $request->name,
+            "email" => $request->email, 
+            "town" => $request->town, 
+            "country" => $request->country, 
+            "zipcode" => $request->zipcode, 
+            "phonenumber" => $request->phonenumber, 
+            "address" => $request->address, 
+            "user_id" => Auth::user()->id,
+            "price" => $request->price, 
+        ]);
+
+        echo "Go to Paypal to make payment";    
+       
+        // return view('foods.food-details', compact('foodItem'));
+
+    }
 }
