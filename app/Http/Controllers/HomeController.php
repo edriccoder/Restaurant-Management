@@ -35,4 +35,6 @@ class HomeController extends Controller
 
         return view('home', compact('breakfastFoods', 'launchFoods', 'dinnerFoods'));
     }
+
+    
 }

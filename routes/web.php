@@ -25,3 +25,9 @@ Route::post('foods/checkout', [App\Http\Controllers\Foods\FoodsController::class
 //pay with paypal
 Route::get('foods/pay', [App\Http\Controllers\Foods\FoodsController::class, 'payWithPaypal'])->name('foods.pay');
 Route::get('foods/success', [App\Http\Controllers\Foods\FoodsController::class, 'success'])->name('foods.success');
+
+//booking tables
+Route::post('foods/booking', [App\Http\Controllers\Foods\FoodsController::class, 'bookingTables'])->name('foods.booking.table');
+
+//menu
+Route::get('foods/menu', [App\Http\Controllers\Foods\FoodsController::class, 'menu'])->name('foods.menu');

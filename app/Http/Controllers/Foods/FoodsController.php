@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Food\Food;
 use App\Models\Food\Cart;
+use App\Models\Food\Booking;
 use App\Models\Food\checkout;
+use App\Models\Food\bookingTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -96,7 +98,14 @@ class FoodsController extends Controller
     }
 
     public function checkout(){
-        return view('foods.checkout');
+
+            if(Session::get('price') == 0) {
+                abort(403, 'Unauthorized action.');
+            } else {
+                return view('foods.checkout');
+            }
+
+
     }
 
     public function storeCheckout(Request $request) {
@@ -114,14 +123,22 @@ class FoodsController extends Controller
         ]);  
 
         if ($checkout) {
-            return redirect()->route('foods.pay');
+            if(Session::get('price') == 0) {
+                abort(403, 'Unauthorized action.');
+            } else {
+                return redirect()->route('foods.pay');
+            }
         }
 
     }
 
     public function payWithPaypal() {
 
-        return view('foods.pay');
+            if(Session::get('price') == 0) {
+                abort(403, 'Unauthorized action.');
+            } else {
+                return view('foods.pay');
+            }
 
     }
 
@@ -131,7 +148,67 @@ class FoodsController extends Controller
 
         $deleteItem->delete();
 
-        return view('foods.success')->with(['success' => 'Your payment was successful']);
+        if(Session::get('price') == 0) {
+            abort(403, 'Unauthorized action.');
+        } else {
+            Session::forget('price');
+            return view('foods.success')->with(['success' => 'Your payment was successful']);
+        }
 
+    }
+
+    public function bookingTables(Request $request) {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'date' => 'required|date',
+            'num_people' => 'required',
+            'spe_request' => 'required',
+        ], [
+            'name.required' => 'Name is required',
+            'email.required' => 'Email is required',
+            'date.required' => 'Date is required',
+            'num_people.required' => 'Number of people is required',
+            'spe_request.required' => 'Special request is required',
+        ]);
+
+        $currentDate = date('m/d/Y H:i:s');
+
+        if ($request->date == $currentDate || $request->date < $currentDate) {
+            return redirect()->route('home')->with(['error' => 'Booking date must be greater than current date']);
+        } else {
+
+            $bookingTables = Booking::create([ 
+                "user_id" => Auth::user()->id,
+                "name" => $request->name,
+                "email" => $request->email, 
+                "date" => $request->date, 
+                "num_people" => $request->num_people, 
+                "spe_request" => $request->spe_request, 
+                
+            ]); 
+
+            if ($bookingTables) {
+
+                return redirect()->route('home')->with(['booked' => 'Booking was successful']);
+            } else {
+                return redirect()->route('home')->with(['error' => 'Booking was not successful']);
+            }
+
+        } 
+    }
+
+    public function menu(){
+        $breakfastFoods = Food::select()->take(4)
+        ->where('category', 'breakfast')->orderBy('id', 'desc')->get();
+
+        $launchFoods = Food::select()->take(4)
+        ->where('category', 'launch')->orderBy('id', 'desc')->get();
+
+        $dinnerFoods = Food::select()->take(4)
+        ->where('category', 'dinner')->orderBy('id', 'desc')->get();
+
+        return view('foods.menu', compact('breakfastFoods', 'launchFoods', 'dinnerFoods'));
     }
 }
