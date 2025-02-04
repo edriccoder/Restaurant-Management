@@ -21,3 +21,7 @@ Route::post('foods/prepare-checkout', [App\Http\Controllers\Foods\FoodsControlle
 //insert user info
 Route::get('foods/checkout', [App\Http\Controllers\Foods\FoodsController::class, 'checkout'])->name('foods.checkout');
 Route::post('foods/checkout', [App\Http\Controllers\Foods\FoodsController::class, 'storeCheckout'])->name('foods.checkout.store');
+
+//pay with paypal
+Route::get('foods/pay', [App\Http\Controllers\Foods\FoodsController::class, 'payWithPaypal'])->name('foods.pay');
+Route::get('foods/success', [App\Http\Controllers\Foods\FoodsController::class, 'success'])->name('foods.success');

@@ -111,11 +111,27 @@ class FoodsController extends Controller
             "address" => $request->address, 
             "user_id" => Auth::user()->id,
             "price" => $request->price, 
-        ]);
+        ]);  
 
-        echo "Go to Paypal to make payment";    
-       
-        // return view('foods.food-details', compact('foodItem'));
+        if ($checkout) {
+            return redirect()->route('foods.pay');
+        }
+
+    }
+
+    public function payWithPaypal() {
+
+        return view('foods.pay');
+
+    }
+
+    public function success() {
+
+        $deleteItem = Cart::where('user_id', Auth::user()->id);
+
+        $deleteItem->delete();
+
+        return view('foods.success')->with(['success' => 'Your payment was successful']);
 
     }
 }
