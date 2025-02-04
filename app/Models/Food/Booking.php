@@ -18,6 +18,7 @@ class Booking extends Model
         'email',
         'date',
         'num_people',
-        'spe_request'
+        'spe_request',
+        'status'
     ];
 }
