@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb justify-content-center text-uppercase">
                 <li class="breadcrumb-item"><a href="{{route("home")}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">My Bookings</a></li>
+                <li class="breadcrumb-item"><a href="#">My Orders</a></li>
             </ol>
         </nav>
     </div>
@@ -21,24 +21,26 @@
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">Number of People</th>
-                <th scope="col">Date</th>
+                <th scope="col">Town</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Price</th>
                 <th scope="col">Status</th>
                 <th scope="col">Review</th>
               </tr>
             </thead>
             <tbody>
-                @foreach ($allBookings as $booking)
+                @foreach ($allOrders as $order)
                     
                 @endforeach
               <tr>
-                <td>{{$booking->name}}</td>
-                <td>{{$booking->email}}</td>
-                <td>{{$booking->num_people}}</td>
-                <td>{{$booking->date}}</td>
-                <td>{{$booking->status}}</td>
-                @if ($booking->status == "Booked")
-                    <td><a href="{{route('users.review.create')}}" class="btn btn-success">Review</a></td>
+                <td>{{$order->name}}</td>
+                <td>{{$order->email}}</td>
+                <td>{{$order->town}}</td>
+                <td>{{$order->phonenumber}}</td>
+                <td>{{$order->price}}</td>
+                <td>{{$order->status}}</td>
+                @if ($order->status == "Delivered")
+                    <td><a href="#" class="btn btn-success">Review</a></td>
                 @else
                     <td>Not Available Yet</td>
                 @endif
