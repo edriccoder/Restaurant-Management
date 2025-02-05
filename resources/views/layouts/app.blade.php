@@ -42,7 +42,7 @@
 
         <div class="container-xxl position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
-                <a href="{{ url('/') }}" class="navbar-brand p-0">
+                <a href="{{ route('home') }}" class="navbar-brand p-0">
                     <h1 class="text-primary m-0"><i class="fa fa-utensils me-3"></i>Restoran</h1>
                     <!-- <img src="img/logo.png" alt="Logo"> -->
                 </a>
@@ -52,10 +52,10 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0 pe-4">
                         <a href="{{ route('home') }}" class="nav-item nav-link active">Home</a>
-                        <a href="{{ url('/about') }}" class="nav-item nav-link">About</a>
-                        <a href="{{ url('/service') }}" class="nav-item nav-link">Service</a>
+                        <a href="{{ route('about') }}" class="nav-item nav-link">About</a>
+                        <a href="{{ route('services') }}" class="nav-item nav-link">Service</a>
                         <a href="{{ route('foods.menu') }}" class="nav-item nav-link">Menu</a>
-                            <a href="{{ url('/contact') }}" class="nav-item nav-link">Contact</a>
+                        <a href="{{ route('contacts') }}" class="nav-item nav-link">Contact</a>
                         <ul class="navbar-nav ms-auto">
                             @guest
                                 @if (Route::has('login'))

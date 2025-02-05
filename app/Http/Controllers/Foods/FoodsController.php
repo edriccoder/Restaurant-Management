@@ -17,13 +17,17 @@ class FoodsController extends Controller
     public function foodDetails($id) {
 
         $foodItem = Food::find($id);
+        
 
-        //verifying if the food item exists
+        if (auth()->user()) {
+            $cartVerify = Cart::where('food_id', $id)
+            ->where('user_id', Auth::user()->id)->count();
 
-        $cartVerify = Cart::where('food_id', $id)
-        ->where('user_id', Auth::user()->id)->count();
+            return view('foods.food-details', compact('foodItem', 'cartVerify'));
+        } else {
+            return view('foods.food-details', compact('foodItem'));
+        }
 
-        return view('foods.food-details', compact('foodItem', 'cartVerify'));
 
     }
 
