@@ -56,7 +56,10 @@ Route::group(["prefix"=>"users"], function() {
 
 Route::get('admin/login', [App\Http\Controllers\Admin\AdminController::class, 'viewLogin'])->name('view.login');
 Route::post('admin/login', [App\Http\Controllers\Admin\AdminController::class, 'checkLogin'])->name('check.login');
-Route::get('index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('admin/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('admin/all-admin', [App\Http\Controllers\Admin\AdminController::class, 'allAdmins'])->name('admin.all');
+Route::get('admin/admin-create', [App\Http\Controllers\Admin\AdminController::class, 'createAdmins'])->name('admin.create');
+Route::post('admin/admin-create', [App\Http\Controllers\Admin\AdminController::class, 'storeAdmins'])->name('admin.store');
 
 // Route::group(["prefix"=>"admin", "middleware" => "auth:admin"], function() {
 //     Route::get('index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');

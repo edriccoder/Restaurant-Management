@@ -21,15 +21,15 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarText">
-        @auth('admin')  
+        @auth('admin')
           <ul class="navbar-nav side-nav" >
             <li class="nav-item">
-              <a class="nav-link" style="margin-left: 20px;" href="index.html">Home
+              <a class="nav-link" style="margin-left: 20px;" href="{{route('admin.dashboard')}}">Home
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="admins/admins.html" style="margin-left: 20px;">Admins</a>
+              <a class="nav-link" href="{{route('admin.all')}}" style="margin-left: 20px;">Admins</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="orders-admins/show-orders.html" style="margin-left: 20px;">Orders</a>
@@ -41,7 +41,7 @@
               <a class="nav-link" href="bookings-admins/show-bookings.html" style="margin-left: 20px;">Bookings</a>
             </li>
           </ul>
-        
+
         <ul class="navbar-nav ml-md-auto d-md-flex">
             <li class="nav-item">
               <a class="nav-link" href="index.html">Home
@@ -57,7 +57,7 @@
                 {{Auth::Guard('admin')->user()->name}}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{route('logout')}}" 
+                <a class="dropdown-item" href="{{route('logout')}}"
                 onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">Logout</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -71,8 +71,8 @@
               </a>
             </li>
           @endauth
-                          
-          
+
+
         </ul>
       </div>
     </div>
