@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2025 at 10:51 AM
+-- Generation Time: Feb 06, 2025 at 05:16 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -24,6 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `email`, `password`, `updated_at`, `created_at`) VALUES
+(1, 'admin', 'admin@gmail.com', '$2y$12$7c9g3nc71yQYSpZw9GoDm.7v7wg.GiykQzT1zi2d7NxfYT0qv1FNW', '2025-02-05 08:13:09', '2025-02-05 08:13:09'),
+(3, 'admin', 'admin2@gmail.com', '$2y$12$e6ziWVMHTlYuaxVZq40pJuoxOZ07yuzVzZsNWBuxO3xDewJiTIGo2', '2025-02-05 17:47:54', '2025-02-05 17:47:54');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `bookings`
 --
 
@@ -39,13 +62,6 @@ CREATE TABLE `bookings` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `bookings`
---
-
-INSERT INTO `bookings` (`id`, `user_id`, `name`, `email`, `date`, `num_people`, `spe_request`, `status`, `updated_at`, `created_at`) VALUES
-(4, 2, 'asdasd', 'asdasd@asdasd', '02/05/2025 3:08 PM', 1, 'adada', 'Processing', '2025-02-03 23:08:16', '2025-02-03 23:08:16');
 
 -- --------------------------------------------------------
 
@@ -105,7 +121,7 @@ CREATE TABLE `checkout` (
   `address` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   `price` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'pending',
+  `status` varchar(255) NOT NULL DEFAULT 'Proccessed',
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -115,11 +131,11 @@ CREATE TABLE `checkout` (
 --
 
 INSERT INTO `checkout` (`id`, `name`, `email`, `town`, `country`, `zipcode`, `phonenumber`, `address`, `user_id`, `price`, `status`, `updated_at`, `created_at`) VALUES
-(14, 'asdasd', 'adasd@ada', 'adasd', 'asdasd', 'asdas', 'asdas', 'dasdasd', 2, '255', 'pending', '2025-02-03 20:28:38', '2025-02-03 20:28:38'),
 (15, 'asdasd', 'adad@asda', 'adad', 'ada', 'asda', 'asd', 'aad', 2, '255', 'pending', '2025-02-03 20:32:12', '2025-02-03 20:32:12'),
 (16, 'adad', 'adasd@adasdasd', 'adad', 'asdas', 'adas', 'asdas', 'adasd', 2, '255', 'pending', '2025-02-03 20:37:37', '2025-02-03 20:37:37'),
 (17, 'asda', 'asdad@asda', 'adad', 'adasd', 'asdad', 'adasd', 'adad', 2, '255', 'pending', '2025-02-03 20:43:14', '2025-02-03 20:43:14'),
-(18, 'asdasd', 'adsasdaada@ada', 'dadad', 'dasdasd', 'adasd', 'asdasd', 'asdsa', 2, '255', 'pending', '2025-02-03 21:14:31', '2025-02-03 21:14:31');
+(18, 'asdasd', 'adsasdaada@ada', 'dadad', 'dasdasd', 'adasd', 'asdasd', 'asdsa', 2, '255', 'processing', '2025-02-05 18:57:18', '2025-02-06 02:57:18'),
+(19, 'asdasd', 'adadad@adasd', 'adasd', 'asdasd', 'asdasd', 'asdasd', 'asdasdasdsa', 2, '255', 'Proccessed', '2025-02-04 22:25:08', '2025-02-04 22:25:08');
 
 -- --------------------------------------------------------
 
@@ -150,16 +166,17 @@ CREATE TABLE `foods` (
   `category` varchar(255) NOT NULL DEFAULT '',
   `description` text NOT NULL,
   `image` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `foods`
 --
 
-INSERT INTO `foods` (`id`, `name`, `price`, `category`, `description`, `image`, `timestamp`) VALUES
-(1, 'pancake', '255', 'breakfast', 'pancakepancakepancakepancakepancakepancakepancakepancakepancakepancakepancake', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhMTEhMWFhUVFxcXFxcYGBcVFRgVGBcXFxUYFxgYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi0lICUtLS0tLS0tLS0tLS0tLS0tLS0vLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIARMAtwMBIgACEQEDEQH/', '2025-02-04 04:43:51'),
-(2, 'pancake', '100', 'launch', 'description description description description description description description description description', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxzLWaDhs6YMWso-GUzSLMXHKIvw7nXE5GCg&s', '2025-02-04 04:45:23');
+INSERT INTO `foods` (`id`, `name`, `price`, `category`, `description`, `image`, `updated_at`, `created_at`) VALUES
+(2, 'pancake', '100', 'launch', 'description description description description description description description description description', 'menu-2.jpg', '2025-02-06 03:52:14', '2025-02-06 03:52:24'),
+(6, 'pancake', '123', 'breakfast', 'pancakepancakepancakepancakepancakepancakepancakepancake', 'pancake.jpg', '2025-02-05 20:14:44', '2025-02-05 20:14:44');
 
 -- --------------------------------------------------------
 
@@ -232,6 +249,29 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE `reviews` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `review` varchar(255) NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `name`, `review`, `updated_at`, `created_at`) VALUES
+(1, 'asda', 'adad', '2025-02-04 19:57:39', '2025-02-04 19:57:39'),
+(2, 'jake zyrus', 'asdad as dasdas asdsad sadadad', '2025-02-04 20:18:41', '2025-02-04 20:18:41'),
+(3, 'asdad', 'adadasd', '2025-02-04 22:25:55', '2025-02-04 22:25:55');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sessions`
 --
 
@@ -249,7 +289,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('feZc1kU6oTPq0wTjUy4kI6aGtWjEuEDGTSvKt0sC', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoicm1pWHBDSUozTnhTd1VPU3BJZThYcVYyOWhxeU5TcVNwQjNRcm5XNiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC91c2Vycy9hbGwtYm9va2luZyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzM4NjM5MTU4O319', 1738661401);
+('BdFkfBTJOM7SPKbdmcq7tRSNHynqxobkNT8n70UB', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiY1JmaEdZVndGVHUyazl1WnEyaUI0cXJ2WURoR2l2VUFIMVR0dFAxUiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9mb29kcy9jYXJ0Ijt9czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aTozO3M6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTczODgxNTMxNDt9fQ==', 1738815350);
 
 -- --------------------------------------------------------
 
@@ -279,6 +319,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `bookings`
@@ -349,6 +395,12 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `reviews`
+--
+ALTER TABLE `reviews`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -368,6 +420,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
@@ -377,13 +435,13 @@ ALTER TABLE `bookings`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -395,7 +453,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `foods`
 --
 ALTER TABLE `foods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -408,6 +466,12 @@ ALTER TABLE `jobs`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `reviews`
+--
+ALTER TABLE `reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

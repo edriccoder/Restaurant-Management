@@ -19,11 +19,12 @@
             <tbody>
                 @foreach ($admins as $admin)
 
+
+                <tr>
+                  <th scope="row">{{$admin->id}}</th>
+                  <td>{{$admin->name}}</td>
+                  <td>{{$admin->email}}</td>
                 @endforeach
-              <tr>
-                <th scope="row">{{$admin->id}}</th>
-                <td>{{$admin->name}}</td>
-                <td>{{$admin->email}}</td>
               </tr>
             </tbody>
           </table>

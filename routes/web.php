@@ -58,8 +58,28 @@ Route::get('admin/login', [App\Http\Controllers\Admin\AdminController::class, 'v
 Route::post('admin/login', [App\Http\Controllers\Admin\AdminController::class, 'checkLogin'])->name('check.login');
 Route::get('admin/index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
 Route::get('admin/all-admin', [App\Http\Controllers\Admin\AdminController::class, 'allAdmins'])->name('admin.all');
+
+//create admin
 Route::get('admin/admin-create', [App\Http\Controllers\Admin\AdminController::class, 'createAdmins'])->name('admin.create');
 Route::post('admin/admin-create', [App\Http\Controllers\Admin\AdminController::class, 'storeAdmins'])->name('admin.store');
+
+//orders
+Route::get('admin/all-orders', [App\Http\Controllers\Admin\AdminController::class, 'allOrders'])->name('orders.all');
+Route::get('admin/edit-orders/{id}', [App\Http\Controllers\Admin\AdminController::class, 'editOrders'])->name('orders.edit');
+Route::post('admin/update-orders/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateOrders'])->name('orders.update');
+Route::get('admin/delete-orders/{id}', [App\Http\Controllers\Admin\AdminController::class, 'deleteOrders'])->name('orders.delete');
+
+//bookings
+Route::get('admin/all-bookings/', [App\Http\Controllers\Admin\AdminController::class, 'allBookings'])->name('bookings.all');
+Route::get('admin/edit-bookings/{id}', [App\Http\Controllers\Admin\AdminController::class, 'editBookings'])->name('bookings.edit');
+Route::post('admin/update-bookings/{id}', [App\Http\Controllers\Admin\AdminController::class, 'updateBookings'])->name('bookings.update');
+Route::get('admin/delete-bookings/{id}', [App\Http\Controllers\Admin\AdminController::class, 'deleteBookings'])->name('bookings.delete');
+
+//foods
+Route::get('admin/all-foods', [App\Http\Controllers\Admin\AdminController::class, 'allFoods'])->name('foods.all');
+Route::get('admin/foods-create', [App\Http\Controllers\Admin\AdminController::class, 'createFoods'])->name('foods.create');
+Route::post('admin/foods-create', [App\Http\Controllers\Admin\AdminController::class, 'storeFoods'])->name('foods.store');
+Route::get('admin/delete-foods/{id}', [App\Http\Controllers\Admin\AdminController::class, 'deletefoods'])->name('foods.delete');
 
 // Route::group(["prefix"=>"admin", "middleware" => "auth:admin"], function() {
 //     Route::get('index', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');

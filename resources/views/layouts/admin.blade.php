@@ -32,13 +32,13 @@
               <a class="nav-link" href="{{route('admin.all')}}" style="margin-left: 20px;">Admins</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="orders-admins/show-orders.html" style="margin-left: 20px;">Orders</a>
+              <a class="nav-link" href="{{route('orders.all')}}" style="margin-left: 20px;">Orders</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="foods-admins/show-foods.html" style="margin-left: 20px;">Foods</a>
+              <a class="nav-link" href="{{route('foods.all')}}" style="margin-left: 20px;">Foods</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="bookings-admins/show-bookings.html" style="margin-left: 20px;">Bookings</a>
+              <a class="nav-link" href="{{route('bookings.all')}}" style="margin-left: 20px;">Bookings</a>
             </li>
           </ul>
 
